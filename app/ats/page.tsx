@@ -148,7 +148,7 @@ function Ats() {
             onSubmit={run}
             rows={12}
             placeholder="Paste the full resume text here, or attach a PDF below."
-            hint="Sent straight from your browser to each model. Strip anything you would not want a model to see."
+            hint="Sent straight from this app to each model. Strip anything you would not want a model to see."
           />
         )}
         {!pdf && (

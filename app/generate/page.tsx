@@ -171,7 +171,7 @@ function Generate() {
         });
         if (shouldWarn) {
           toast.warning(
-            "History was trimmed to fit your browser's storage limit.",
+            "History was trimmed to fit the local storage limit.",
           );
         }
       }

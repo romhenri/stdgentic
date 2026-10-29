@@ -27,7 +27,7 @@ export function KeyGate({ children }: { children: ReactNode }) {
         <KeyRound className="text-muted-foreground mx-auto size-8" />
         <h2 className="mt-4 text-lg font-semibold">An API key is required</h2>
         <p className="text-muted-foreground mt-2 text-sm">
-          This tool calls OpenRouter directly from your browser, using your own
+          This tool calls OpenRouter directly from this app, using your own
           key. Add one to continue.
         </p>
         <Button className="mt-5" onClick={openSettings}>

@@ -81,7 +81,7 @@ export function KeySettingsDialog() {
         <DialogHeader>
           <DialogTitle>OpenRouter key</DialogTitle>
           <DialogDescription>
-            Stored in this browser under <code>pf:openrouter_key</code>. It is
+            Stored on this machine under <code>pf:openrouter_key</code>. It is
             sent only to openrouter.ai. This app has no server.
           </DialogDescription>
         </DialogHeader>

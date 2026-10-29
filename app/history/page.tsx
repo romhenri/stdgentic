@@ -99,7 +99,7 @@ export default function HistoryPage() {
         )}
       </div>
       <p className="text-muted-foreground mt-1 text-sm">
-        The 50 most recent runs, kept in this browser only.
+        The 50 most recent runs, kept on this machine only.
       </p>
 
       {entries === null ? (

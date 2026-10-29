@@ -176,7 +176,7 @@ function Compare() {
       },
     });
     if (shouldWarn) {
-      toast.warning("History was trimmed to fit your browser's storage limit.");
+      toast.warning("History was trimmed to fit the local storage limit.");
     }
   }, [busy, runs]);
 
@@ -366,7 +366,7 @@ function Compare() {
       {runs.length === 0 ? (
         <div className="text-muted-foreground rounded-xl border border-dashed p-10 text-center text-sm">
           Pick your models, write a prompt, and hit Run. Every model streams in
-          its own column, straight from your browser.
+          its own column, straight from this app.
         </div>
       ) : (
         <div className="grid gap-3 sm:grid-flow-col sm:auto-cols-[minmax(21rem,1fr)] sm:overflow-x-auto sm:pb-2">
