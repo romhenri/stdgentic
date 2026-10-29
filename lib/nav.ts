@@ -19,16 +19,16 @@ export interface NavGroup {
  */
 export const NAV_GROUPS: NavGroup[] = [
   {
-    title: "run",
+    title: "compare",
     items: [
       {
         href: "/compare",
-        label: "compare",
+        label: "models",
         summary: "One prompt across 1 to 6 models, streaming side by side.",
       },
       {
         href: "/experiment",
-        label: "experiment",
+        label: "prompts",
         summary: "1 to 5 variants of one prompt on the same model.",
       },
       {
@@ -58,7 +58,7 @@ export const NAV_GROUPS: NavGroup[] = [
     items: [
       {
         href: "/judge",
-        label: "judge",
+        label: "loop",
         summary: "A challenger rewrites until a judge model accepts it.",
       },
       {
@@ -117,7 +117,7 @@ export const NAV_GROUPS: NavGroup[] = [
 
 /** The tools Cmd+1..9 jump to: the ones you run, not the reference pages. */
 export const SHORTCUT_ITEMS: NavItem[] = NAV_GROUPS.filter((group) =>
-  ["run", "write", "evaluate", "log"].includes(group.title),
+  ["compare", "write", "evaluate", "log"].includes(group.title),
 )
   .flatMap((group) => group.items)
   .slice(0, 9);
