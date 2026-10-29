@@ -11,6 +11,17 @@ import {
 /** The only host this app ever talks to. */
 export const OPENROUTER_BASE = "https://openrouter.ai/api/v1";
 
+let costListener: ((usd: number) => void) | null = null;
+
+/**
+ * Registers the one listener told what OpenRouter charged for each
+ * completion. Every chat call passes through this module, so the app shell
+ * subscribes here to total the session's spend.
+ */
+export function onCharged(listener: ((usd: number) => void) | null): void {
+  costListener = listener;
+}
+
 /**
  * The headers OpenRouter wants on every call. The catalog is public, so the
  * key is optional there, but attribution headers still go out.
@@ -201,7 +212,14 @@ export async function streamChatCompletion({
         }
         const text = chunk.choices?.[0]?.delta?.content;
         if (text) onDelta(text);
-        if (chunk.usage) onUsage?.(chunk.usage);
+        if (chunk.usage) {
+          // ponytail: a run cancelled before its last frame bills on
+          // OpenRouter but is not counted, since the cost arrives in that frame.
+          if (typeof chunk.usage.cost === "number") {
+            costListener?.(chunk.usage.cost);
+          }
+          onUsage?.(chunk.usage);
+        }
       }
     }
   } catch (error) {

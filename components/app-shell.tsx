@@ -15,6 +15,7 @@ import {
   CommandShortcut,
 } from "@/components/ui/command";
 import { activeItem, NAV_GROUPS, SHORTCUT_ITEMS } from "@/lib/nav";
+import { onCharged } from "@/lib/openrouter/client";
 import { cn } from "@/lib/utils";
 import { useAppStore } from "@/store/app-store";
 
@@ -138,6 +139,7 @@ function StatusBar() {
   const hydrated = useAppStore((s) => s.hydrated);
   const apiKey = useAppStore((s) => s.apiKey);
   const openSettings = useAppStore((s) => s.openSettings);
+  const sessionCost = useAppStore((s) => s.sessionCost);
 
   return (
     <footer className="bg-sidebar flex h-6 shrink-0 items-stretch border-t text-[11px]">
@@ -157,6 +159,15 @@ function StatusBar() {
       </button>
       <span className="flex items-center border-r px-2.5">
         {item?.label ?? "home"}
+      </span>
+      <span
+        className="flex items-center border-r px-2.5"
+        title="Charged by OpenRouter since the app opened"
+      >
+        {/* Fixed 6 decimals: most calls cost fractions of a cent, and a
+            constant width keeps the bar from jumping as the total grows. */}
+        ${sessionCost.toFixed(6)}
+        <span className="text-muted-foreground ml-1">session</span>
       </span>
       <span className="text-muted-foreground ml-auto flex items-center gap-3 px-2.5">
         <span>⌘K palette</span>
@@ -232,10 +243,16 @@ export function AppShell({ children }: { children: ReactNode }) {
   const router = useRouter();
   const hydrate = useAppStore((s) => s.hydrate);
   const openSettings = useAppStore((s) => s.openSettings);
+  const addSessionCost = useAppStore((s) => s.addSessionCost);
   const [paletteOpen, setPaletteOpen] = useState(false);
 
   // localStorage only exists in the browser, and these pages are prerendered.
   useEffect(() => hydrate(), [hydrate]);
+
+  useEffect(() => {
+    onCharged(addSessionCost);
+    return () => onCharged(null);
+  }, [addSessionCost]);
 
   useEffect(() => {
     function onKeyDown(event: KeyboardEvent) {

@@ -32,11 +32,13 @@ export interface OpenRouterKeyInfo {
   is_free_tier?: boolean;
 }
 
-/** The `usage` object streamed back when `stream_options.include_usage` is set. */
+/** The `usage` object OpenRouter streams in the last frame of a completion. */
 export interface TokenUsage {
   prompt_tokens: number;
   completion_tokens: number;
   total_tokens?: number;
+  /** What OpenRouter actually charged, in credits (1 credit = 1 USD). */
+  cost?: number;
 }
 
 /** A message part; `file` carries a PDF as a data URL for the file-parser plugin. */

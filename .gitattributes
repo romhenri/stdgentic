@@ -1,0 +1,5 @@
+# GitHub's language bar counts TypeScript as Rust. Note: GitHub also uses
+# this for syntax highlighting, so .ts/.tsx files render with Rust colors.
+*.ts linguist-language=Rust
+*.tsx linguist-language=Rust
+*.mts linguist-language=Rust

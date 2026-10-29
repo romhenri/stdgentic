@@ -46,6 +46,8 @@ interface AppState {
    */
   comparePreset: ComparePreset | null;
   generatePreset: GeneratePreset | null;
+  /** USD charged by OpenRouter since the app opened. In memory only. */
+  sessionCost: number;
 
   hydrate: () => void;
   setApiKey: (key: string | null) => void;
@@ -54,6 +56,7 @@ interface AppState {
   setSettingsOpen: (open: boolean) => void;
   setComparePreset: (preset: ComparePreset | null) => void;
   setGeneratePreset: (preset: GeneratePreset | null) => void;
+  addSessionCost: (usd: number) => void;
 }
 
 /**
@@ -76,6 +79,7 @@ export const useAppStore = create<AppState>((set, get) => ({
   settingsOpen: false,
   comparePreset: null,
   generatePreset: null,
+  sessionCost: 0,
 
   hydrate: () => {
     if (get().hydrated) return;
@@ -105,4 +109,5 @@ export const useAppStore = create<AppState>((set, get) => ({
 
   setComparePreset: (comparePreset) => set({ comparePreset }),
   setGeneratePreset: (generatePreset) => set({ generatePreset }),
+  addSessionCost: (usd) => set({ sessionCost: get().sessionCost + usd }),
 }));
