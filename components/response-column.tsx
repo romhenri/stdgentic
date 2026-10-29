@@ -224,7 +224,8 @@ export function ResponseColumn({
 
   return (
     <>
-      <section className="bg-card flex min-h-[22rem] flex-col overflow-hidden rounded-xl border sm:min-h-0">
+      {/* A pane: its border lights up while focus is inside, like tmux. */}
+      <section className="bg-card focus-within:border-primary flex min-h-[22rem] flex-col overflow-hidden border sm:min-h-0">
         <header className="flex items-center gap-2 border-b px-4 py-2.5">
           <span
             className={cn("size-2 shrink-0 rounded-full", status.dot)}
