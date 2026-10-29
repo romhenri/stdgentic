@@ -1,32 +1,35 @@
 # stdgentic
 
-A prompt lab for macOS with a full-terminal look, inspired by cmux. It is a
-desktop clone of Prompt Forge (prompt-trace): compare models, test prompt
-variants, sweep temperatures, generate prompts, judge, backtranslate, score
-resumes and let models talk, all from one window with a sidebar, a status bar
-and a `⌘K` palette.
+A harness lab for macOS with a full-terminal look, inspired by cmux. Compare
+models, test prompt variants, sweep temperatures, generate prompts, judge,
+backtranslate, score resumes and let models talk, all from one window with a
+sidebar, a status bar and a `⌘K` palette.
+
+![Home screen: the sidebar of tools, the tool list and the status bar](docs/screenshots/home.jpg)
+
+![Command palette filtering tools](docs/screenshots/palette.jpg)
+
+![The types reference page](docs/screenshots/types.jpg)
 
 ## How it is built
 
-- **[Tauri 2](https://tauri.app)** wraps the app as a native `.app`, using the
-  system WebKit view. The Rust side only creates the window and provides the
-  native save dialog for exports.
-- **Next.js** is used purely as a static site generator (`output: 'export'`).
-  `pnpm build` emits `out/`, which Tauri bundles. There is no server: no API
-  routes, no server actions, no database, no accounts, no telemetry.
-- The look comes from the tokens in `app/globals.css`: one ANSI palette that
-  every shadcn component reads, monospace everywhere, no radius, no shadows.
+- **[Tauri 2](https://tauri.app)**, with a Rust core, makes it a native
+  macOS `.app`. It owns the window, the overlay title bar and the native save
+  dialog for exports.
+- **Terminal UI**: one ANSI palette drives every component, monospace
+  everywhere, no radius, no shadows. The tokens live in `app/globals.css`, so
+  a new theme is one block of colors.
 - `lib/nav.ts` is the single list of tools. The sidebar, the palette, the
-  `⌘1`-`⌘9` shortcuts and the home page all read it, so a new tool only needs
-  an entry there.
-
-The only host the app ever contacts is `https://openrouter.ai`.
+  `⌘1`-`⌘9` shortcuts and the home screen all read it, so a new tool only
+  needs an entry there.
+- **No server**: no accounts, no database, no telemetry. The only host the app
+  contacts is your LLM gateway.
 
 ## Your key
 
-Model calls are billed to your own [OpenRouter](https://openrouter.ai/keys) key,
-which is stored in the app's local storage under `pf:openrouter_key` and is
-sent to openrouter.ai and nowhere else.
+Model calls are billed to your own LLM gateway key. It is stored locally on
+this machine and sent to the gateway and nowhere else. The status bar shows
+what the gateway has charged since the app opened.
 
 ## Shortcuts
 
@@ -43,8 +46,7 @@ Needs Rust (`rustup`) and the Xcode command line tools.
 
 ```bash
 pnpm install
-pnpm tauri dev            # the desktop app, with hot reload
+pnpm tauri dev            # the app, with hot reload
 pnpm tauri build          # .app and .dmg in src-tauri/target/release/bundle/
-pnpm dev                  # the same UI in a browser, http://localhost:3000
 pnpm lint && pnpm typecheck && pnpm test
 ```
