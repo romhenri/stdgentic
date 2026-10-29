@@ -6,6 +6,8 @@ const nextConfig: NextConfig = {
   // Deep links resolve to out/compare/index.html on any dumb static host.
   trailingSlash: true,
   images: { unoptimized: true },
+  // The floating dev badge sits on top of the sidebar's settings row.
+  devIndicators: false,
 };
 
 export default nextConfig;

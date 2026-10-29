@@ -1,30 +1,26 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
-import { NoKeyBanner } from "@/components/no-key-banner";
-import { SiteHeader } from "@/components/site-header";
+import { Geist_Mono } from "next/font/google";
+import { AppShell } from "@/components/app-shell";
 import { Toaster } from "@/components/ui/sonner";
 import "./globals.css";
 
-const sans = Geist({ variable: "--font-sans", subsets: ["latin"] });
 const mono = Geist_Mono({ variable: "--font-mono", subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "Prompt Forge",
+  title: "stdgentic",
   description:
-    "Generate and compare LLM prompts. Runs entirely in your browser with your own OpenRouter key.",
+    "A prompt lab with a full-terminal look. Runs locally with your own OpenRouter key.",
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html
       lang="en"
-      // Dark-first: there is no theme toggle, the app is a dark developer tool.
-      className={`dark ${sans.variable} ${mono.variable} h-full antialiased`}
+      // One theme: a dark terminal. There is no toggle.
+      className={`dark ${mono.variable} h-full antialiased`}
     >
-      <body className="flex min-h-full flex-col">
-        <SiteHeader />
-        <NoKeyBanner />
-        <div className="flex min-h-0 flex-1 flex-col">{children}</div>
+      <body className="h-full overflow-hidden">
+        <AppShell>{children}</AppShell>
         <Toaster position="bottom-right" />
       </body>
     </html>
