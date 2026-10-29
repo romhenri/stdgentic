@@ -85,12 +85,24 @@ export function toJson(data: ComparisonExport): string {
   );
 }
 
-/** Client-side file download; no server, no upload. */
-export function downloadText(
+/**
+ * Saves a file locally; no server, no upload. Inside the desktop app the
+ * webview ignores `<a download>`, so it asks for a path with the native save
+ * dialog instead. Resolves without writing if the user cancels.
+ */
+export async function downloadText(
   filename: string,
   contents: string,
   type: string,
-): void {
+): Promise<void> {
+  const { isTauri } = await import("@tauri-apps/api/core");
+  if (isTauri()) {
+    const { save } = await import("@tauri-apps/plugin-dialog");
+    const { writeTextFile } = await import("@tauri-apps/plugin-fs");
+    const path = await save({ defaultPath: filename });
+    if (path) await writeTextFile(path, contents);
+    return;
+  }
   const url = URL.createObjectURL(new Blob([contents], { type }));
   const link = document.createElement("a");
   link.href = url;

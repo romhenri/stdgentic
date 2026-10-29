@@ -324,10 +324,10 @@ function Compare() {
                   <DropdownMenuItem
                     onSelect={() =>
                       downloadText(
-                        `prompt-forge-${stamp}.md`,
+                        `stdgentic-${stamp}.md`,
                         toMarkdown(exportData),
                         "text/markdown",
-                      )
+                      ).catch(() => toast.error("Could not save the file."))
                     }
                   >
                     Markdown
@@ -335,10 +335,10 @@ function Compare() {
                   <DropdownMenuItem
                     onSelect={() =>
                       downloadText(
-                        `prompt-forge-${stamp}.json`,
+                        `stdgentic-${stamp}.json`,
                         toJson(exportData),
                         "application/json",
-                      )
+                      ).catch(() => toast.error("Could not save the file."))
                     }
                   >
                     JSON
