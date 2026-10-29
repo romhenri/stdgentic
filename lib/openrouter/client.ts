@@ -18,8 +18,13 @@ export const OPENROUTER_BASE = "https://openrouter.ai/api/v1";
 function headers(apiKey?: string): HeadersInit {
   return {
     ...(apiKey ? { Authorization: `Bearer ${apiKey}` } : {}),
-    "HTTP-Referer": typeof window === "undefined" ? "" : window.location.origin,
-    "X-Title": "Prompt Forge",
+    // The desktop app's origin is tauri://localhost, which is not a URL
+    // OpenRouter can attribute, so only real web origins are sent.
+    ...(typeof window !== "undefined" &&
+    window.location.protocol.startsWith("http")
+      ? { "HTTP-Referer": window.location.origin }
+      : {}),
+    "X-Title": "stdgentic",
     "Content-Type": "application/json",
   };
 }
