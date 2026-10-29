@@ -42,7 +42,7 @@ export const SERVICE_INFO: Record<ServiceId, { title: string; href: string }> =
     compare: { title: "Model Comparison", href: "/compare" },
     experiment: { title: "Prompt Comparison", href: "/experiment" },
     temperature: { title: "Temperature Sweep", href: "/temperature" },
-    agents: { title: "Agent Conversation", href: "/agents" },
+    agents: { title: "Agents", href: "/agents/debate" },
     prompted: { title: "Prompted", href: "/prompted" },
     ats: { title: "Resume Scorer", href: "/ats" },
     judge: { title: "Judge Brute Force", href: "/judge" },

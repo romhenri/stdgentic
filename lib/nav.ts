@@ -66,10 +66,26 @@ export const NAV_GROUPS: NavGroup[] = [
         label: "resume",
         summary: "2 to 6 models score the same resume out of 100.",
       },
+    ],
+  },
+  {
+    title: "agents",
+    items: [
       {
-        href: "/agents",
-        label: "agents",
-        summary: "2 to 4 models talk to each other for a few rounds.",
+        href: "/agents/debate",
+        label: "debate",
+        summary:
+          "Models argue a motion, then a judge scores them and picks a winner.",
+      },
+      {
+        href: "/agents/brainstorm",
+        label: "brainstorm",
+        summary: "Models build on each other's ideas, laid out as a board.",
+      },
+      {
+        href: "/agents/interview",
+        label: "interview",
+        summary: "One model interviews another, question by question.",
       },
     ],
   },
@@ -117,7 +133,7 @@ export const NAV_GROUPS: NavGroup[] = [
 
 /** The tools Cmd+1..9 jump to: the ones you run, not the reference pages. */
 export const SHORTCUT_ITEMS: NavItem[] = NAV_GROUPS.filter((group) =>
-  ["compare", "write", "evaluate", "log"].includes(group.title),
+  ["compare", "write", "evaluate", "agents", "log"].includes(group.title),
 )
   .flatMap((group) => group.items)
   .slice(0, 9);
