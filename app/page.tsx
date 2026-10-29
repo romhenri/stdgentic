@@ -1,75 +1,12 @@
 "use client";
 
 import Link from "next/link";
-import {
-  ArrowRight,
-  Columns3,
-  FileUser,
-  FlaskConical,
-  WandSparkles,
-  MessagesSquare,
-  Thermometer,
-  Gavel,
-  Languages,
-  ShieldCheck,
-  Sparkles,
-} from "lucide-react";
 import { KeyForm, maskKey } from "@/components/key-form";
 import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
 import { PAGE_GUTTER } from "@/lib/layout";
+import { NAV_GROUPS } from "@/lib/nav";
 import { useAppStore } from "@/store/app-store";
-
-const TOOLS = [
-  {
-    href: "/compare",
-    icon: Columns3,
-    title: "Model Comparison",
-    body: "Run one prompt across 1 to 6 models at once, streaming side by side, with latency, tokens and estimated cost per column.",
-  },
-  {
-    href: "/experiment",
-    icon: FlaskConical,
-    title: "Prompt Comparison",
-    body: "Write 1 to 5 variants of one prompt and run them all on the same model, side by side, to see what each change does.",
-  },
-  {
-    href: "/generate",
-    icon: Sparkles,
-    title: "Prompt Generator",
-    body: "Describe the job. Get back a structured, production-ready prompt you can copy or send straight to a comparison.",
-  },
-  {
-    href: "/ats",
-    icon: FileUser,
-    title: "Resume Scorer",
-    body: "Have 2 to 6 models grade the same resume out of 100, against a job posting or on its own, and see where they disagree.",
-  },
-  {
-    href: "/backtranslate",
-    icon: Languages,
-    title: "Backtranslation",
-    body: "Send text to another language and back, again and again, across several models, and see what meaning survives each trip.",
-  },
-  {
-    href: "/agents",
-    icon: MessagesSquare,
-    title: "Agent Conversation",
-    body: "Let 2 to 4 models talk to each other for a few rounds, each one answering what the last one said, with a role per agent.",
-  },
-  {
-    href: "/temperature",
-    icon: Thermometer,
-    title: "Temperature Sweep",
-    body: "Run one prompt on one model at several temperatures, side by side, and see how far the answer drifts as randomness goes up.",
-  },
-  {
-    href: "/judge",
-    icon: Gavel,
-    title: "Judge Brute Force",
-    body: "Give a judge model a requirement, then let a challenger keep rewriting from the feedback until it passes or runs out of rounds.",
-  },
-];
 
 export default function Home() {
   const hydrated = useAppStore((s) => s.hydrated);
@@ -77,81 +14,82 @@ export default function Home() {
   const openSettings = useAppStore((s) => s.openSettings);
 
   return (
-    <main className={`mx-auto w-full max-w-4xl py-12 sm:py-16 ${PAGE_GUTTER}`}>
-      <h1 className="text-2xl font-semibold tracking-tight sm:text-3xl">
-        Prompt Forge
-      </h1>
-      <p className="text-muted-foreground mt-2 max-w-2xl text-sm sm:text-base">
-        Small tools for working with LLM prompts, running entirely in your
-        browser against your own OpenRouter key.
+    <main className={`mx-auto w-full max-w-4xl py-10 ${PAGE_GUTTER}`}>
+      <p className="text-[13px]">
+        <span className="text-primary">$</span> stdgentic --help
+      </p>
+      <h1 className="mt-4 text-2xl font-semibold">stdgentic</h1>
+      <p className="text-muted-foreground mt-1 max-w-2xl text-[13px]">
+        A prompt lab for your own OpenRouter key. No server and no accounts:
+        every call goes straight from this app to openrouter.ai.
       </p>
 
-      <div className="mt-10 grid gap-5 sm:grid-cols-2">
-        {TOOLS.map((tool) => (
-          <Link
-            key={tool.href}
-            href={tool.href}
-            className="hover:border-foreground/25 hover:bg-muted/40 focus-visible:ring-ring group rounded-xl border p-5 transition-colors focus-visible:ring-3 focus-visible:outline-none"
-          >
-            <tool.icon className="size-5 text-orange-400" />
-            <h2 className="mt-3 flex items-center gap-1.5 font-medium">
-              {tool.title}
-              <ArrowRight className="size-4 -translate-x-1 opacity-0 transition-all group-hover:translate-x-0 group-hover:opacity-100" />
+      <div className="mt-8 space-y-6">
+        {NAV_GROUPS.map((group) => (
+          <section key={group.title}>
+            <h2 className="text-muted-foreground/70 text-[11px] tracking-widest uppercase">
+              {group.title}
             </h2>
-            <p className="text-muted-foreground mt-1.5 text-sm">{tool.body}</p>
-          </Link>
+            <ul className="mt-1.5">
+              {group.items.map((item) => (
+                <li key={item.href}>
+                  <Link
+                    href={item.href}
+                    className="hover:bg-accent group grid grid-cols-[16ch_1fr] gap-4 px-2 py-1 text-[13px]"
+                  >
+                    <span className="group-hover:text-primary">
+                      {item.label}
+                    </span>
+                    <span className="text-muted-foreground truncate">
+                      {item.summary}
+                    </span>
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </section>
         ))}
       </div>
 
-      <Link
-        href="/prompted"
-        className="from-orange-400/10 hover:border-orange-400/50 focus-visible:ring-ring group mt-5 flex items-center gap-4 rounded-xl border border-dashed bg-gradient-to-r to-transparent p-5 transition-colors focus-visible:ring-3 focus-visible:outline-none"
-      >
-        <WandSparkles className="size-6 shrink-0 text-orange-400" />
-        <div className="min-w-0 flex-1">
-          <h2 className="font-medium">Prompted</h2>
-          <p className="text-muted-foreground mt-0.5 text-sm">
-            A different kind of service: the prompt is already written. Pick
-            one, bring your input and run.
-          </p>
-        </div>
-        <ArrowRight className="size-4 shrink-0 -translate-x-1 opacity-0 transition-all group-hover:translate-x-0 group-hover:opacity-100" />
-      </Link>
-
-      <section className="mt-10 rounded-xl border p-6">
+      <section className="mt-10 border p-5">
         {!hydrated ? (
           <div className="space-y-3">
             <Skeleton className="h-5 w-40" />
             <Skeleton className="h-9 w-full" />
           </div>
         ) : apiKey ? (
-          <div className="flex flex-wrap items-center gap-3">
-            <ShieldCheck className="size-5 shrink-0 text-emerald-400" />
-            <div className="min-w-0">
-              <div className="text-sm font-medium">
-                Key saved in this browser
-              </div>
-              <div className="text-muted-foreground font-mono text-xs">
-                {maskKey(apiKey)}
-              </div>
-            </div>
-            <Button variant="outline" size="sm" onClick={openSettings}>
-              Manage
+          <div className="flex flex-wrap items-center gap-3 text-[13px]">
+            <span className="text-emerald-400">●</span>
+            <span>key</span>
+            <span className="text-muted-foreground">{maskKey(apiKey)}</span>
+            <Button
+              variant="outline"
+              size="sm"
+              className="ml-auto"
+              onClick={openSettings}
+            >
+              manage
             </Button>
           </div>
         ) : (
           <>
-            <h2 className="font-medium">Start with your OpenRouter key</h2>
-            <p className="text-muted-foreground mt-1.5 mb-4 text-sm">
-              Prompt Forge has no server and no accounts. Your key is kept in
-              this browser&apos;s localStorage and is sent to openrouter.ai and
-              nowhere else. Every model call is billed to your own OpenRouter
-              account.
+            <h2 className="text-[13px]">
+              <span className="text-red-500">●</span> no openrouter key
+            </h2>
+            <p className="text-muted-foreground mt-1.5 mb-4 text-[13px]">
+              Your key is kept in this app&apos;s local storage and is sent to
+              openrouter.ai and nowhere else. Every model call is billed to
+              your own OpenRouter account.
             </p>
             <KeyForm />
           </>
         )}
       </section>
+
+      <p className="text-muted-foreground mt-8 text-[13px]">
+        <span className="text-primary">$</span>{" "}
+        <span className="cursor-blink">▊</span>
+      </p>
     </main>
   );
 }
