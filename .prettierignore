@@ -5,3 +5,5 @@ pnpm-lock.yaml
 components/ui
 SPEC.md
 app/globals.css
+src-tauri/target
+src-tauri/gen
