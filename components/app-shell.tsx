@@ -114,6 +114,7 @@ function Sidebar({ onPalette }: { onPalette: () => void }) {
 
 function TopBar() {
   const item = activeItem(usePathname());
+  const group = NAV_GROUPS.find((g) => item && g.items.includes(item));
 
   return (
     <header
@@ -121,7 +122,9 @@ function TopBar() {
       className="flex h-10 shrink-0 items-center gap-3 border-b px-4 text-[13px]"
     >
       <span className="pointer-events-none truncate">
-        <span className="text-muted-foreground">stdgentic /</span>{" "}
+        <span className="text-muted-foreground">
+          {group?.title ?? "stdgentic"} /
+        </span>{" "}
         {item?.label ?? "home"}
       </span>
       {item && (
