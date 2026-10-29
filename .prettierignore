@@ -1,0 +1,7 @@
+.next
+out
+node_modules
+pnpm-lock.yaml
+components/ui
+SPEC.md
+app/globals.css
